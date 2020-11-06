@@ -1,2 +1,2 @@
-import AppPersonDetails from './App-person-details';
-export default AppPersonDetails
+import AppPersonDetails from "./App-person-details";
+export default AppPersonDetails;

@@ -1,2 +1,2 @@
-import Applist from './App-list';
+import Applist from "./App-list";
 export default Applist;

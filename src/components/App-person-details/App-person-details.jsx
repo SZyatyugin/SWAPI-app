@@ -1,24 +1,18 @@
-import React from 'react'
+import React from "react";
 
-import SwapiServices from '../Swapi-services';
+// import SwapiServices from "../Swapi-services";
 
-let swapiServices=new SwapiServices();
-export default class AppPersonDetails extends React.Component{
-
-constructor(props){
-    super(props)
-    state:{
-
+// let swapiServices = new SwapiServices();
+export default class AppPersonDetails extends React.Component {
+    constructor(props) {
+        super(props);
     }
-}
-getResponse(){
-    
-}
-render(){
-    return (
-        <div className='person-details'>
-            <div>text</div>
-        </div>
-    )
-}
+    getResponse() {}
+    render() {
+        return (
+            <div className="person-details">
+                <div>text</div>
+            </div>
+        );
+    }
 }

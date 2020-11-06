@@ -1,23 +1,23 @@
-.app-header{
+.app-header {
     display: flex;
-    flex-flow:row wrap;
+    flex-flow: row wrap;
 }
-.app-header__navigation{
-    flex:1 0;
+.app-header__navigation {
+    flex: 1 0;
     align-items: center;
 }
-.app-header__navigation>ul{
+.app-header__navigation > ul {
     display: flex;
-    flex-flow:row wrap;
+    flex-flow: row wrap;
     justify-content: space-around;
     align-items: center;
-    margin:0;
+    margin: 0;
     padding: 0;
 }
-ul>li{
+ul > li {
     list-style-type: none;
     cursor: pointer;
 }
-.col-sm{
+.col-sm {
     text-align: center;
 }
