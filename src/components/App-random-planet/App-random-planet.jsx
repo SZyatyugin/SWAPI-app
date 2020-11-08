@@ -4,27 +4,34 @@ import SwapiServices from "../Swapi-services";
 
 let swapiServices = new SwapiServices();
 class RandomPlanet extends React.Component {
-    
-   
     state = {
-        randomPlanet:{},
+        randomPlanet: {}
     };
-    constructor(props) { 
+    constructor(props) {
         super(props);
         this.getRensponseFromAPI();
     }
-    showRandomPlanet(result){
-        this.setState({randomPlanet:result,});
+    showRandomPlanet(result) {
+        this.setState({ randomPlanet: result });
     }
     getRensponseFromAPI() {
         let randomId = Math.floor(Math.random() * 25) + 2;
-        swapiServices.getPlanet(randomId)
-            .then((result)=>{this.showRandomPlanet(result);});
+        swapiServices.getPlanet(randomId).then((result) => {
+            this.showRandomPlanet(result);
+        });
     }
 
     render() {
         console.log(this.state.randomPlanet);
-        let {randomPlanet:{planetName,population,rotationPeriod,diameter,id,},} = this.state;
+        let {
+            randomPlanet: {
+                planetName,
+                population,
+                rotationPeriod,
+                diameter,
+                id
+            }
+        } = this.state;
         return (
             <div className="random-planet jumbotron jumbotron-fluid">
                 <div className="container">
