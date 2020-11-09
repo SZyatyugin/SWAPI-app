@@ -27,7 +27,7 @@
         "semi": ["error", "always"],
 
         // override default options for rules from base configurations
-        "comma-dangle": ["error", "never"],
+        "comma-dangle": ["error", "only-multiline"],
         "no-cond-assign": ["error", "always"],
 
         // disable rules from base configurations
