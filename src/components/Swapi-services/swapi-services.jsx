@@ -26,7 +26,7 @@ export default class SwapiServices extends React.Component {
             population: result.population,
             rotationPeriod: result.rotation_period,
             diameter: result.diameter,
-            id: this.getId(result.url)
+            id: this.getId(result.url),
         };
     }
     getAllpeople() {
