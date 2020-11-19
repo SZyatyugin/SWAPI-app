@@ -1,18 +1,26 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-// import SwapiServices from "../Swapi-services";
-
-// let swapiServices = new SwapiServices();
 export default class AppPersonDetails extends React.Component {
     constructor(props) {
         super(props);
     }
-    getResponse() {}
+    
     render() {
+        let {personToShow}=this.props;
+        console.log(personToShow);
         return (
-            <div className="person-details">
-                <div>text</div>
+            <div className="card">
+                <img></img>
+                <div className="card-body">
+                    <h5>{personToShow.name}</h5>
+                    <p className="card-text"></p>
+                </div>
             </div>
         );
     }
-}
+};
+AppPersonDetails.propTypes={
+    personToShow:PropTypes.object,
+};
+

@@ -14,11 +14,10 @@ class RandomPlanet extends React.Component {
     };
     constructor(props) {
         super(props);
-        this.getRensponseFromAPI();
-        setInterval(()=>{this.getRensponseFromAPI();},5000);
     }
     componentDidMount(){
-        console.log("mount");
+        this.getRensponseFromAPI();
+        setInterval(()=>{this.getRensponseFromAPI();},5000);
     }
     showRandomPlanet(randomPlanet) {
         this.setState({
@@ -36,10 +35,11 @@ class RandomPlanet extends React.Component {
         this.getRensponseFromAPI();
     }
     getRensponseFromAPI=()=>{
-        this.setState({ loading: true });
+        if(!this.state.error){
+            this.setState({ loading: true });
+        }
         let randomId = Math.floor(Math.random() * 25) + 2;
         swapiServices.getPlanet(randomId).then((result) => {
-            console.log(result);
             this.showRandomPlanet(result);
         }).catch(()=>{
             this.planetShowError();
@@ -62,14 +62,14 @@ class RandomPlanet extends React.Component {
     }
 }
 const PlanetView = ({ planet }) => {
-    let { planetName, population, rotationPeriod, diameter, id } = planet;
+    let { planetName, population, rotationPeriod, diameter,image } = planet;
     return (
         <div className="container">
             <div className="row justify-content-center">
                 <img
                     className="img-fluid rounded"
-                    src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
-                    alt=""
+                    src={image}
+                    alt={planetName}
                 />
                 <div className="planet-info">
                     <h4>{planetName}</h4>
