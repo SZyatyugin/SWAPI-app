@@ -3,84 +3,96 @@ import PropTypes from "prop-types";
 import "./App-random-planet.css";
 import SwapiServices from "../Swapi-services";
 import Apploading from "../App-loading";
+import AppErrorIndicator from "../App-error-indicator";
 let swapiServices = new SwapiServices();
+
 class RandomPlanet extends React.Component {
     state = {
         randomPlanet: {},
-        loading:false
+        loading: true,
+        error:false
     };
     constructor(props) {
         super(props);
-        
+        this.getRensponseFromAPI();
+        setInterval(()=>{this.getRensponseFromAPI();},5000);
+    }
+    componentDidMount(){
+        console.log("mount");
+    }
+    showRandomPlanet(randomPlanet) {
+        this.setState({
+            randomPlanet,
+            loading: false,
+        });
+    }
+    planetShowError(){
+        this.setState({
+            error:true,
+            loading:false
+        });
+    }
+    getRandomPlanet(){
         this.getRensponseFromAPI();
     }
-    showRandomPlanet(result) {
-        this.setState({ randomPlanet: result });
-    }
-    getRensponseFromAPI() {
-        this.setState({loading:true});
+    getRensponseFromAPI=()=>{
+        this.setState({ loading: true });
         let randomId = Math.floor(Math.random() * 25) + 2;
         swapiServices.getPlanet(randomId).then((result) => {
+            console.log(result);
             this.showRandomPlanet(result);
+        }).catch(()=>{
+            this.planetShowError();
         });
     }
 
     render() {
-       let{randomPlanet,loading}=this.state;
-        if(loading){
-            return <Apploading/>;
-        }
+        let { randomPlanet, loading,error } = this.state;
+        let hasData=!(loading||error);
+        let loadingSpinner=loading?<Apploading/>:null;
+        let content=hasData?<PlanetView planet={randomPlanet} />:null;
+        let errorShow=error?<AppErrorIndicator/>:null;
         return (
             <div className="random-planet jumbotron jumbotron-fluid">
-              <PlanetView planet={randomPlanet}/>
+                {errorShow}
+                {loadingSpinner}
+                {content}
             </div>
         );
     }
-};
-const PlanetView=({planet})=>{
-    let {
-        randomPlanet: {
-            planetName,
-            population,
-            rotationPeriod,
-            diameter,
-            id,
-        }
-    } = planet;
-    return(
-        <React.Fragment>
-            <div className="container">
-                <div className="row justify-content-center">
-                    <img
-                        className="img-fluid rounded"
-                        src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
-                        alt=""
-                    />
-                    <div className="planet-info">
-                        <h4>{planetName}</h4>
-                        <ul className="list-group">
-                            <li className="list-group-item">
-                                <span className="term">Population: </span>
-                                <span> {population}</span>
-                            </li>
-                            <li className="list-group-item">
-                                <span className="term">
-                                        Rotation Period:{" "}
-                                </span>
-                                <span> {rotationPeriod}</span>
-                            </li>
-                            <li className="list-group-item">
-                                <span className="term">Diameter: </span>
-                                <span> {diameter}</span>
-                            </li>
-                        </ul>
-                    </div>
+}
+const PlanetView = ({ planet }) => {
+    let { planetName, population, rotationPeriod, diameter, id } = planet;
+    return (
+        <div className="container">
+            <div className="row justify-content-center">
+                <img
+                    className="img-fluid rounded"
+                    src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+                    alt=""
+                />
+                <div className="planet-info">
+                    <h4>{planetName}</h4>
+                    <ul className="list-group">
+                        <li className="list-group-item">
+                            <span className="term">Population: </span>
+                            <span> {population}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span className="term">Rotation Period: </span>
+                            <span> {rotationPeriod}</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span className="term">Diameter: </span>
+                            <span> {diameter}</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     );
 };
-PlanetView.PropTypes={
-    planet:PropTypes.object
+PlanetView.propTypes = {
+    planet: PropTypes.node,
 };
 export default RandomPlanet;

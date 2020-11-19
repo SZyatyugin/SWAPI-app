@@ -20,14 +20,19 @@ export default class SwapiServices extends React.Component {
         let id = value.match(pattern)[1];
         return id;
     }
-    getTemplate(result) {
+    getTemplate(planet) {
         return {
-            planetName: result.name,
-            population: result.population,
-            rotationPeriod: result.rotation_period,
-            diameter: result.diameter,
-            id: this.getId(result.url),
+            planetName: planet.name,
+            population: planet.population,
+            rotationPeriod: planet.rotation_period,
+            diameter: planet.diameter,
+            id: this.getId(planet.url),
+            image:this.getPlanetImage(this.getId(planet.url)),
         };
+    }
+    getPlanetImage(id){
+        let url=`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
+        return url;
     }
     getAllpeople() {
         return this.getResponse("https://swapi.dev/api/people/");
