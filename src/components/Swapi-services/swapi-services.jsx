@@ -20,20 +20,46 @@ export default class SwapiServices extends React.Component {
         let id = value.match(pattern)[1];
         return id;
     }
-    getTemplate(result) {
+    getTemplatePlanet(planet) {
         return {
-            planetName: result.name,
-            population: result.population,
-            rotationPeriod: result.rotation_period,
-            diameter: result.diameter,
-            id: this.getId(result.url),
+            planetName: planet.name,
+            population: planet.population,
+            rotationPeriod: planet.rotation_period,
+            diameter: planet.diameter,
+            id: this.getId(planet.url),
+            image:this.getPlanetImage(this.getId(planet.url)),
         };
     }
-    getAllpeople() {
-        return this.getResponse("https://swapi.dev/api/people/");
+    getTemplatePeople=async(person)=>{
+        let image;
+        await this.getPlanet(this.getId(person.homeworld)).then((result)=>{ 
+            image=result;});
+        return{
+            name:person.name,
+            id:this.getId(person.url),
+            birthYear:person.birth_year,
+            height:person.height,
+            mass:person.mass,
+            homeworld:{
+                name:person.homeworld,
+                img:image,
+            }        
+        };
     }
-    getPerson(id) {
-        return this.getResponse(`https://swapi.dev/api/people/${id}`);
+
+    getPlanetImage(id){
+        let url=`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
+        return url;
+    }
+    async getAllpeople() {
+        let people=await this.getResponse("https://swapi.dev/api/people/");
+        return people.results.map((elem)=>{
+            return this.getTemplatePeople(elem);
+        });
+    }
+    async getPerson(id) {
+        let person=await this.getResponse(`https://swapi.dev/api/people/${id}`);
+        return this.getTemplatePeople(person);
     }
     getAllPlanets() {
         return this.getResponse("https://swapi.dev/api/planets/");
@@ -42,7 +68,7 @@ export default class SwapiServices extends React.Component {
         let planet = await this.getResponse(
             `https://swapi.dev/api/planets/${id}`
         );
-        return this.getTemplate(planet);
+        return this.getTemplatePlanet(planet);
     }
     getAllSpecies() {
         return this.getResponse("https://swapi.dev/api/species/");
