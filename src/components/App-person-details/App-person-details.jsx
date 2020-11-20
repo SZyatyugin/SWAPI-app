@@ -12,14 +12,13 @@ export default class AppPersonDetails extends React.Component {
     componentDidMount() {
         this.getPerson();
     }
-    componentDidUpdate(prevProps,prevState){
-        console.log(prevProps);
-        console.log(prevState);
-        this.getPerson();
+    componentDidUpdate(prevProps){
+        if(this.props.personId!==prevProps.personId){
+            this.getPerson();
+        }
     }
     getPerson(){
         let { personId } = this.props;
-        console.log(personId);
         if (!personId) {
             return;
         }
@@ -29,12 +28,10 @@ export default class AppPersonDetails extends React.Component {
     };
 
     render() {
-        console.log(this.props.personId);
-        console.log(this.state.person);
         if (!this.state.person) {
             return <div className="text-center">Choose a person</div>;
         }
-        let {person:image,name,birthYear,height,mass} = this.state;
+        let {person:{image,name,birthYear,height,mass,homeworld:{hmwName,hmwImg}}} = this.state;
         return (
             <div className="card">
                 <div className="text-center">
@@ -51,11 +48,11 @@ export default class AppPersonDetails extends React.Component {
                 </div>
                 <div>
                     <p className="card-text text-muted text-center">
-                        howeWorld:
+                        howeWorld: {hmwName}
                     </p>
                     <div className="text-center">
                         <img
-                            src=""
+                            src={hmwImg}
                             className="img-fluid img-thumbnail rounded"
                         ></img>
                     </div>

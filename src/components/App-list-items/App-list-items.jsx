@@ -12,7 +12,6 @@ export default class AppListItems extends React.Component {
         swapiService.getAllpeople().then((result) => {
             this.getResultFromAPI(result);
         });
-        
     }
     getResultFromAPI(peopleList) {
         this.setState({ peopleList });
@@ -35,7 +34,11 @@ export default class AppListItems extends React.Component {
     render() {
         let { peopleList } = this.state;
         if (!peopleList) {
-            return <Apploading />;
+            return (
+                <div className="d-flex justify-content-center ">
+                    <Apploading />;
+                </div>
+            );
         }
         return this.renderListItems(peopleList);
     }
