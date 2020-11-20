@@ -7,14 +7,15 @@ import AppErrorIndicator from "../App-error-indicator";
 let swapiServices = new SwapiServices();
 
 class RandomPlanet extends React.Component {
+    
+    constructor(props) {
+        super(props);
+    };
     state = {
         randomPlanet: {},
         loading: true,
         error:false
     };
-    constructor(props) {
-        super(props);
-    }
     componentDidMount(){
         this.getRensponseFromAPI();
         setInterval(()=>{this.getRensponseFromAPI();},5000);
