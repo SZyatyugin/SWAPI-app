@@ -1,48 +1,52 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SwapiServices from "../Swapi-services";
 import Apploading from "../App-loading";
-let swapiService = new SwapiServices();
-
 export default class AppListItems extends React.Component {
     state = {
-        peopleList: null,
+        listItems: null,
     };
     componentDidMount() {
-        swapiService.getAllpeople().then((result) => {
+        const {getData}=this.props;
+        getData().then((result) => {
             this.getResultFromAPI(result);
         });
     }
-    getResultFromAPI(peopleList) {
-        this.setState({ peopleList });
+    getResultFromAPI(listItems) {
+        this.setState({ listItems });
     }
-    renderListItems(peopleList) {
-        return peopleList.map((elem) => {
+    renderListItems(listItems) {
+        return listItems.map((elem) => {
+            const value=this.props.children(elem);
             return (
                 <li
                     key={elem.id}
                     className="list-group-item list-group-item-action d-flex justify-content-center"
                     onClick={() => {
-                        this.props.getPerson(elem.id);
+                        this.props.getItemId(elem.id);
                     }}
                 >
-                    <h5>{elem.name}</h5>
+                    <h5>{value}</h5>
                 </li>
             );
         });
     }
     render() {
-        let { peopleList } = this.state;
-        if (!peopleList) {
+        let { listItems } = this.state;
+        if (!listItems) {
             return (
-                <div className="d-flex justify-content-center ">
+                <div className="d-flex justify-content-center">
                     <Apploading />;
                 </div>
             );
         }
-        return this.renderListItems(peopleList);
+        return (
+            <ul className="list-group list-group-flush">
+                {this.renderListItems(listItems)}
+            </ul>);
     }
 }
 AppListItems.propTypes = {
-    getPerson: PropTypes.func,
+    getItemId: PropTypes.func,
+    getData:PropTypes.func,
+    children:PropTypes.func,
 };

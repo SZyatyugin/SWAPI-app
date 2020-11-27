@@ -3,20 +3,20 @@ import AppHeader from "../App-header";
 import RandomPlanet from "../App-random-planet";
 import "./App.css";
 import AppErrorIndicator from "../App-error-indicator";
-import AppPersonPage from "../App-person-page";
+import AppContentPage from "../App-content-page";
 export default class App extends React.Component {
     constructor(props) {
         super(props);
     }
     state = {
-        personId: null,
+        itemId: null,
         error: false,
     };
     componentDidCatch() {
         this.setState({ error: true });
     }
-    getPerson = (personId) => {
-        this.setState({ personId });
+    getItemId = (itemId) => {
+        this.setState({ itemId });
     };
     render() {
         if(this.state.error){
@@ -26,9 +26,9 @@ export default class App extends React.Component {
             <div id="app">
                 <AppHeader />
                 <RandomPlanet />
-                <AppPersonPage 
-                    getPerson={this.getPerson}
-                    personId={this.state.personId}/>
+                <AppContentPage 
+                    getItemId={this.getItemId}
+                    itemId={this.state.itemId}/>
             </div>
         );
     }

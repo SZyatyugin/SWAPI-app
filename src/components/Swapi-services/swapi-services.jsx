@@ -38,7 +38,6 @@ export default class SwapiServices extends React.Component {
         return homeWorld;
     };
     getTemplatePeople =(person) => {
-        this.getHomeWorld(person).then((result)=>{template.homeworld.hmwName=result;});
         let template={
             image:this.getPersonImage( this.getId(person.url)),
             name: person.name,
@@ -46,10 +45,8 @@ export default class SwapiServices extends React.Component {
             birthYear: person.birth_year,
             height: person.height,
             mass: person.mass,
-            homeworld: {
-                hmwName:"",
-                hmwImg: this.getPlanetImage(this.getId(person.url)),
-            },
+            hmwImg: this.getPlanetImage(this.getId(person.url)),
+            
         };
        
         return template;
@@ -62,37 +59,40 @@ export default class SwapiServices extends React.Component {
         let url = `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
         return url;
     }
-    async getAllpeople() {
+    getAllPeople=async()=>{
         let people = await this.getResponse("https://swapi.dev/api/people/");
         return people.results.map((elem) => {
-            return  this.getTemplatePeople(elem);
+            return {name:elem.name,id: this.getId(elem.url)};
         });
     }
-    async getPerson(id) {
+    getPerson=async(id)=>{
         let person = await this.getResponse(
             `https://swapi.dev/api/people/${id}`
         );
         return this.getTemplatePeople(person);
     }
-    getAllPlanets() {
-        return this.getResponse("https://swapi.dev/api/planets/");
+    getAllPlanets=async()=>{
+        let planets=await this.getResponse("https://swapi.dev/api/planets/");
+        return planets.results.map((elem)=>{
+            return {name:elem.name,id: this.getId(elem.url)};
+        });
     }
-    async getPlanet(id) {
+    getPlanet=async(id)=>{
         let planet = await this.getResponse(
             `https://swapi.dev/api/planets/${id}`
         );
         return await this.getTemplatePlanet(planet);
     }
-    getAllSpecies() {
-        return this.getResponse("https://swapi.dev/api/species/");
+    getAllSpecies=async()=>{
+        return await this.getResponse("https://swapi.dev/api/species/");
     }
-    getAllStarships() {
-        return this.getResponse("https://swapi.dev/api/starships/");
+    getAllStarships=async()=>{
+        return await this.getResponse("https://swapi.dev/api/starships/");
     }
-    getStarshipData(id) {
-        return this.getResponse(`https://swapi.dev/api/starships/${id}`);
+    getStarshipData=async(id)=>{
+        return await this.getResponse(`https://swapi.dev/api/starships/${id}`);
     }
-    getAllVehicles() {
-        return this.getResponse("https://swapi.dev/api/vehicles/");
+    getAllVehicles=async()=>{
+        return await this.getResponse("https://swapi.dev/api/vehicles/");
     }
 }
