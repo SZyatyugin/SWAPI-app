@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import Apploading from "../App-loading";
 export default class AppItemDetails extends React.Component {
     constructor(props) {
         super(props);
     }
     state = {
         item: null,
+        loading:null
     };
     componentDidMount() {
         this.getItem();
@@ -17,29 +18,44 @@ export default class AppItemDetails extends React.Component {
         }
     }
     getItem() {
+        this.setState({loading:false});
         let { itemId, getData } = this.props;
         if (!itemId) {
             return;
         }
         getData(itemId).then((item) => {
-            this.setState({ item });
+            this.setState({ item,
+                loading:true });
         });
     }
 
     render() {
-        let { item } = this.state;
-        console.log(item);
-        if (!this.state.item) {
+        let { item,loading } = this.state;
+        let { children } = this.props;
+        if (!item) {
             return <div className="text-center">Make a choice</div>;
+        }
+        let personPlanet = item.imgPlanet ? (
+            <img
+                className="img-fluid img-thumbnail rounded"
+                src={item.imgPlanet}
+            ></img>
+        ) : null;
+        if(!loading){
+            return <Apploading/>;
         }
         return (
             <div className="card">
                 <div className="card-body text-center">
-                    {React.Children.map(this.props.children, (child) => {
+                    <img
+                        className="img-fluid img-thumbnail rounded"
+                        src={item.image}
+                    ></img>
+                    {React.Children.map(children, (child) => {
                         return React.cloneElement(child, { item });
                     })}
+                    {personPlanet}
                 </div>
-                <div></div>
             </div>
         );
     }
@@ -49,20 +65,19 @@ AppItemDetails.propTypes = {
     item: PropTypes.object,
     itemId: PropTypes.string,
     getData: PropTypes.func,
-    children: PropTypes.object,
+    children: PropTypes.string,
 };
 
 const AppTemplateCard = ({ item, field, label }) => {
     return (
-        <div>
-            <p className="card-text text-muted">{label} {item[field]} </p>
-        </div>
+        <h6>
+            {label} <span className="text-muted">{item[field]}</span>
+        </h6>
     );
 };
 AppTemplateCard.propTypes = {
-    // item: PropTypes.object,
     item: PropTypes.object,
-    field: PropTypes.array,
+    field: PropTypes.string,
     label: PropTypes.string,
 };
 export { AppTemplateCard };

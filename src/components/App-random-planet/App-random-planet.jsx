@@ -7,18 +7,19 @@ import AppErrorIndicator from "../App-error-indicator";
 let swapiServices = new SwapiServices();
 
 class RandomPlanet extends React.Component {
-    
     constructor(props) {
         super(props);
-    };
+    }
     state = {
         randomPlanet: {},
         loading: true,
-        error:false
+        error: false,
     };
-    componentDidMount(){
+    componentDidMount() {
         this.getRensponseFromAPI();
-        setInterval(()=>{this.getRensponseFromAPI();},5000);
+        setInterval(() => {
+            this.getRensponseFromAPI();
+        }, 5000);
     }
     showRandomPlanet(randomPlanet) {
         this.setState({
@@ -26,33 +27,36 @@ class RandomPlanet extends React.Component {
             loading: false,
         });
     }
-    planetShowError(){
+    planetShowError() {
         this.setState({
-            error:true,
-            loading:false
+            error: true,
+            loading: false,
         });
     }
-    getRandomPlanet(){
+    getRandomPlanet() {
         this.getRensponseFromAPI();
     }
-    getRensponseFromAPI=()=>{
-        if(!this.state.error){
+    getRensponseFromAPI = () => {
+        if (!this.state.error) {
             this.setState({ loading: true });
         }
         let randomId = Math.floor(Math.random() * 25) + 2;
-        swapiServices.getPlanet(randomId).then((result) => {
-            this.showRandomPlanet(result);
-        }).catch(()=>{
-            this.planetShowError();
-        });
-    }
+        swapiServices
+            .getPlanet(randomId)
+            .then((result) => {
+                this.showRandomPlanet(result);
+            })
+            .catch(() => {
+                this.planetShowError();
+            });
+    };
 
     render() {
-        let { randomPlanet, loading,error } = this.state;
-        let hasData=!(loading||error);
-        let loadingSpinner=loading?<Apploading/>:null;
-        let content=hasData?<PlanetView planet={randomPlanet} />:null;
-        let errorShow=error?<AppErrorIndicator/>:null;
+        let { randomPlanet, loading, error } = this.state;
+        let hasData = !(loading || error);
+        let loadingSpinner = loading ? <Apploading /> : null;
+        let content = hasData ? <PlanetView planet={randomPlanet} /> : null;
+        let errorShow = error ? <AppErrorIndicator /> : null;
         return (
             <div className="random-planet jumbotron jumbotron-fluid">
                 {errorShow}
@@ -63,7 +67,7 @@ class RandomPlanet extends React.Component {
     }
 }
 const PlanetView = ({ planet }) => {
-    let { planetName, population, rotationPeriod, diameter,image } = planet;
+    let { planetName, population, rotationPeriod, diameter, image } = planet;
     return (
         <div className="container">
             <div className="row justify-content-center">

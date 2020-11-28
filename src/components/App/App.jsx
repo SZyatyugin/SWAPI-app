@@ -19,16 +19,17 @@ export default class App extends React.Component {
         this.setState({ itemId });
     };
     render() {
-        if(this.state.error){
-            return <AppErrorIndicator/>;
+        if (this.state.error) {
+            return <AppErrorIndicator />;
         }
         return (
             <div id="app">
                 <AppHeader />
                 <RandomPlanet />
-                <AppContentPage 
+                <AppContentPage
                     getItemId={this.getItemId}
-                    itemId={this.state.itemId}/>
+                    itemId={this.state.itemId}
+                />
             </div>
         );
     }
