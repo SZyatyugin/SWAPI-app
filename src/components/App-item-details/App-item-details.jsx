@@ -7,7 +7,7 @@ export default class AppItemDetails extends React.Component {
     }
     state = {
         item: null,
-        loading:null
+        loading: null,
     };
     componentDidMount() {
         this.getItem();
@@ -18,19 +18,18 @@ export default class AppItemDetails extends React.Component {
         }
     }
     getItem() {
-        this.setState({loading:false});
+        this.setState({ loading: false });
         let { itemId, getData } = this.props;
         if (!itemId) {
             return;
         }
         getData(itemId).then((item) => {
-            this.setState({ item,
-                loading:true });
+            this.setState({ item, loading: true });
         });
     }
 
     render() {
-        let { item,loading } = this.state;
+        let { item, loading } = this.state;
         let { children } = this.props;
         if (!item) {
             return <div className="text-center">Make a choice</div>;
@@ -41,11 +40,11 @@ export default class AppItemDetails extends React.Component {
                 src={item.imgPlanet}
             ></img>
         ) : null;
-        if(!loading){
-            return <Apploading/>;
+        if (!loading) {
+            return <Apploading />;
         }
         return (
-            <div className="card">
+            <div className="card col-6">
                 <div className="card-body text-center">
                     <img
                         className="img-fluid img-thumbnail rounded"
@@ -65,7 +64,7 @@ AppItemDetails.propTypes = {
     item: PropTypes.object,
     itemId: PropTypes.string,
     getData: PropTypes.func,
-    children: PropTypes.string,
+    children: PropTypes.array,
 };
 
 const AppTemplateCard = ({ item, field, label }) => {

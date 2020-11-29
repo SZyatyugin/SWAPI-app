@@ -4,6 +4,7 @@ import RandomPlanet from "../App-random-planet";
 import "./App.css";
 import AppErrorIndicator from "../App-error-indicator";
 import AppContentPage from "../App-content-page";
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -24,6 +25,7 @@ export default class App extends React.Component {
         }
         return (
             <div id="app">
+                <div className="container"></div>
                 <AppHeader />
                 <RandomPlanet />
                 <AppContentPage

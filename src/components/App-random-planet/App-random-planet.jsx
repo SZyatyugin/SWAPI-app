@@ -69,7 +69,7 @@ class RandomPlanet extends React.Component {
 const PlanetView = ({ planet }) => {
     let { planetName, population, rotationPeriod, diameter, image } = planet;
     return (
-        <div className="container">
+        <div>
             <div className="row justify-content-center">
                 <img
                     className="img-fluid rounded"
@@ -98,6 +98,6 @@ const PlanetView = ({ planet }) => {
     );
 };
 PlanetView.propTypes = {
-    planet: PropTypes.node,
+    planet: PropTypes.object,
 };
 export default RandomPlanet;

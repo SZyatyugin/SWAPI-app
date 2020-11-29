@@ -1,8 +1,11 @@
 import React from "react";
 import Apploading from "../App-loading";
-
+import PropTypes from "prop-types";
 const hocHelper = (View, getData) => {
     return class AppHOCHelper extends React.Component {
+        propTypes = {
+            getData: PropTypes.func,
+        };
         state = {
             data: null,
         };
@@ -14,7 +17,6 @@ const hocHelper = (View, getData) => {
         getResultFromAPI(data) {
             this.setState({ data });
         }
-
         render() {
             let { data } = this.state;
 

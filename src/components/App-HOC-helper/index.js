@@ -1,2 +1,3 @@
 import hocHelper from "./App-HOC-helper.jsx";
-export default hocHelper;
+import appHOCHelperSwapiServices from "./App-HOC-helper-swapiServices";
+export { hocHelper, appHOCHelperSwapiServices };

@@ -1,17 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AppErrorIndicator from "../App-error-indicator";
-import {
-    PersonList,
-    PlanetList,
-    StarshipList,
-} from "../App-content-page-component";
-import {
-    PersonDetails,
-    PlanetDetails,
-    StarshipDetails,
-} from "../App-content-page-component";
+import PeoplePage from "../App-pages";
+import SwapiServices from "../Swapi-services";
+
+import { Provider } from "../Swapi-services-context";
 export default class AppContentPage extends React.Component {
+    swapiServices = new SwapiServices();
     state = {
         error: false,
     };
@@ -22,25 +17,13 @@ export default class AppContentPage extends React.Component {
         if (this.state.error) {
             return <AppErrorIndicator />;
         }
-        let { getItemId,itemId } = this.props;
+        let { getItemId, itemId } = this.props;
         return (
-            <div className="container">
-                <div className="row mb-4 h-100 justify-content-around">
-                    <PersonList getItemId={getItemId}>
-                    </PersonList>
-                    <PersonDetails itemId={itemId} />
+            <Provider value={this.swapiServices}>
+                <div className="container">
+                    <PeoplePage getItemId={getItemId} itemId={itemId} />
                 </div>
-                <div className="row mb-4 h-100 justify-content-around">
-                    <PlanetList getItemId={getItemId}>
-                    </PlanetList>
-                    <PlanetDetails itemId={itemId} />
-                </div>
-                <div className="row h-100 justify-content-around">
-                    <StarshipList getItemId={getItemId}>
-                    </StarshipList>
-                    <StarshipDetails itemId={itemId} />
-                </div>
-            </div>
+            </Provider>
         );
     }
 }

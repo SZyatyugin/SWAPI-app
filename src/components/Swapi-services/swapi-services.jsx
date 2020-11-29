@@ -50,17 +50,17 @@ export default class SwapiServices extends React.Component {
 
         return template;
     };
-    getTemplateShip=(ship)=>{
-        let template={
-            image:this.getShipImage(this.getId(ship.url)),
-            manufacturer:ship.manufacturer,
-            model:ship.model,
-            name:ship.name,
-            starship_class:ship.starship_class,
-            max_atmosphering_speed:ship.max_atmosphering_speed
+    getTemplateShip = (ship) => {
+        let template = {
+            image: this.getShipImage(this.getId(ship.url)),
+            manufacturer: ship.manufacturer,
+            model: ship.model,
+            name: ship.name,
+            starship_class: ship.starship_class,
+            max_atmosphering_speed: ship.max_atmosphering_speed,
         };
         return template;
-    }
+    };
 
     getPersonImage(id) {
         let url = `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
@@ -70,7 +70,7 @@ export default class SwapiServices extends React.Component {
         let url = `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
         return url;
     }
-    getShipImage(id){
+    getShipImage(id) {
         let url = `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
         return url;
     }
@@ -110,7 +110,9 @@ export default class SwapiServices extends React.Component {
         });
     };
     getStarship = async (id) => {
-        let starship=await this.getResponse(`https://swapi.dev/api/starships/${id}`);
+        let starship = await this.getResponse(
+            `https://swapi.dev/api/starships/${id}`
+        );
         return this.getTemplateShip(starship);
     };
     getAllVehicles = async () => {
