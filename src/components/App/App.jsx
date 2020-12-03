@@ -10,28 +10,22 @@ export default class App extends React.Component {
         super(props);
     }
     state = {
-        itemId: null,
         error: false,
     };
     componentDidCatch() {
         this.setState({ error: true });
     }
-    getItemId = (itemId) => {
-        this.setState({ itemId });
-    };
     render() {
         if (this.state.error) {
             return <AppErrorIndicator />;
         }
         return (
             <div id="app">
-                <div className="container"></div>
-                <AppHeader />
-                <RandomPlanet />
-                <AppContentPage
-                    getItemId={this.getItemId}
-                    itemId={this.state.itemId}
-                />
+                <div className="container">
+                    <AppHeader />
+                    <RandomPlanet />
+                    <AppContentPage />
+                </div>
             </div>
         );
     }

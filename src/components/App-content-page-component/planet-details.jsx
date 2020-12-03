@@ -16,6 +16,6 @@ const PlanetDetails = ({ itemId, swapiService }) => {
 };
 PlanetDetails.propTypes = {
     itemId: PropTypes.string,
-    swapiService: PropTypes.func,
+    swapiService: PropTypes.object,
 };
 export default appHOCHelperSwapiServices(PlanetDetails);

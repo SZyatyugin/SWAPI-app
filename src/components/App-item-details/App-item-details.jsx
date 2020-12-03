@@ -41,7 +41,9 @@ export default class AppItemDetails extends React.Component {
             ></img>
         ) : null;
         if (!loading) {
-            return <Apploading />;
+            <div className="card col-6">
+                return <Apploading />;
+            </div>;
         }
         return (
             <div className="card col-6">

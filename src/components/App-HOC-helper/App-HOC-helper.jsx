@@ -3,7 +3,7 @@ import Apploading from "../App-loading";
 import PropTypes from "prop-types";
 const hocHelper = (View, getData) => {
     return class AppHOCHelper extends React.Component {
-        propTypes = {
+        static propTypes = {
             getData: PropTypes.func,
         };
         state = {
@@ -23,7 +23,7 @@ const hocHelper = (View, getData) => {
             if (!data) {
                 return (
                     <div className="d-flex justify-content-center">
-                        <Apploading />;
+                        <Apploading />
                     </div>
                 );
             }
